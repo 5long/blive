@@ -1,0 +1,20 @@
+{
+  "name": "bilichat",
+  "version": "0.1.0",
+  "description": "Chat client for live.bilibili.com",
+  "main": "conn.js",
+  "dependencies": {
+    "ent": "^2.2.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/5long/bilichat.git"
+  },
+  "author": "Whyme Lyu",
+  "license": "Public Domain",
+  "bugs": {
+    "url": "https://github.com/5long/bilichat/issues"
+  },
+  "homepage": "https://github.com/5long/bilichat#readme"
+}
