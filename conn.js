@@ -1,11 +1,10 @@
 var net = require("net")
-  , decode = require("ent/decode")
+  , parse = require("./protocol").parse
+  , events = require("events")
+  , inherits = require("util").inherits
 
 const host = "livecmt.bilibili.com"
 const port = "88"
-
-const COMMENT = 4
-const NUMBER = 1
 
 function composeJoinChannel(channelID) {
   var buf = new Buffer(12)
@@ -15,95 +14,88 @@ function composeJoinChannel(channelID) {
   return buf
 }
 
-function joinChannel(client, channelID) {
-  client.write(composeJoinChannel(channelID))
-}
-
 function composeHeartbeat() {
   return new Buffer("\x01\x02\x00\x04")
 }
 
-function sendHeartbeat(client) {
-  client.write(composeHeartbeat())
+function Conn(channelID) {
+  this.channelID = channelID
+  this.socket = this.hbInterval = null
+}
+inherits(Conn, events.EventEmitter)
+
+Conn.prototype.connect = function() {
+  this.socket = net.connect(port, host)
+  this.handleEvents(this.socket)
 }
 
-const ignoreCommands = new Set(['PREPARING', 'LIVE'])
-function printComment(payload) {
-  if (ignoreCommands.has(payload.cmd))
-
-  if (payload.cmd !== "DANMU_MSG") {
-    console.log("Don't know how to handle message", payload)
-    return
-  }
-
-  var nick = payload.info[2][1]
-    , msg = payload.info[1]
-
-  console.log("%s : %s", nick, decode(msg))
+Conn.prototype.handleEvents = function(socket) {
+  this.socket = socket
+  this.handleConnection(socket)
+  this.handleData(socket)
+  this.handleDisconnect(socket)
 }
 
-function handleComment(buf) {
-  var pktLength = buf.readIntBE(2, 2)
-  if (pktLength !== buf.length) {
-    console.log("Can't easily handle this: pktlen: %d; buflen: %d",
-               pktLength, buf.length)
-    return
-  }
-
-  var payload = JSON.parse(buf.toString("utf8", 4))
-  printComment(payload)
+Conn.prototype.handleConnection = function(socket) {
+  var conn = this
+  socket.on('connect', function() {
+    conn.joinChannel()
+    conn.setupHeartbeat()
+  })
 }
 
-function handleNumber(buf) {
-  if (buf.length !== 6) {
-    console.log("Can't easily handle number buffer: ", buf)
-    return
-  }
+Conn.prototype.joinChannel = function() {
+  this.socket.write(composeJoinChannel(this.channelID))
 }
 
-function printError(e) {
-  if (e.code === 'EPIPE') {
-    return
-  }
-
-  console.log("Shit: %s", e)
+Conn.prototype.setupHeartbeat = function() {
+  this.hbInterval = setInterval(function() {
+    this.sendHeartbeat()
+  }.bind(this), 55000)
 }
 
-function reconnecting() {
-  console.log("Reconnecting")
+Conn.prototype.sendHeartbeat = function() {
+  this.socket.write(composeHeartbeat())
 }
+
+Conn.prototype.handleData = function() {
+  this.socket.on("data", function(buf) {
+    var messages = parse(buf)
+    messages.forEach(function(m) {
+      this.emit(m.type, m)
+    }, this)
+  }.bind(this))
+}
+
+Conn.prototype.handleDisconnect = function() {
+  this.socket.on("error", this.reconnect.bind(this))
+}
+
+Conn.prototype.reconnect = function() {
+  this.stopHeartbeat()
+  this.connect()
+}
+
+Conn.prototype.stopHeartbeat = function() {
+  clearInterval(this.hbInterval)
+  this.hbInterval = null
+}
+
+module.exports = Conn
+Conn.Conn = Conn
 
 function newDumbConnection(channelID) {
-  var hbInterval
-  var client = net.connect(port, host, function() {
-    var c = this
-    joinChannel(c, channelID)
-    hbInterval = setInterval(function() {
-      sendHeartbeat(c)
-    }, 55000)
+  var conn = new Conn(channelID)
+  conn.on("comment", function(c) {
+    console.log("%s : %s", c.nick, c.message)
+  }).on("unknown", function(m) {
+    console.log("unknown message: %s", m)
+  }).on("onlineNumber", function(m) {
+    console.log("# Online: %d", m.number)
   })
-
-  client.on("data", function(buf) {
-    var messageType = buf.readIntBE(0, 2)
-    switch (messageType) {
-      case COMMENT:
-        handleComment(buf)
-        break;
-      case NUMBER:
-        handleNumber(buf)
-        break;
-      default:
-        console.log("unknown message type: %s", messageType)
-    }
-  })
-
-  client.on("error", function(e) {
-    printError(e)
-    reconnecting()
-    newDumbConnection(channelID)
-    clearInterval(hbInterval)
-    client = null
-  })
+  conn.connect()
 }
 
-newDumbConnection(process.argv[2] || 5446)
+if (module.id === '.') {
+  newDumbConnection(process.argv[2] || 5446)
+}
