@@ -14,22 +14,21 @@ inherits(Conn, events.EventEmitter)
 
 Conn.prototype.connect = function() {
   this.socket = net.connect(port, host)
-  this.handleEvents(this.socket)
+  this.handleEvents()
+  return this
 }
 
-Conn.prototype.handleEvents = function(socket) {
-  this.socket = socket
-  this.handleConnection(socket)
-  this.handleData(socket)
-  this.handleDisconnect(socket)
+Conn.prototype.handleEvents = function() {
+  this.handleConnection()
+  this.handleData()
+  this.handleDisconnect()
 }
 
-Conn.prototype.handleConnection = function(socket) {
-  var conn = this
-  socket.on('connect', function() {
-    conn.joinChannel()
-    conn.setupHeartbeat()
-  })
+Conn.prototype.handleConnection = function() {
+  this.socket.on('connect', function() {
+    this.joinChannel()
+    this.setupHeartbeat()
+  }.bind(this))
 }
 
 Conn.prototype.joinChannel = function() {
