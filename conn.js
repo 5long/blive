@@ -1,22 +1,10 @@
 var net = require("net")
-  , parse = require("./protocol").parse
+  , protocol = require("./protocol")
   , events = require("events")
   , inherits = require("util").inherits
 
 const host = "livecmt.bilibili.com"
 const port = "88"
-
-function composeJoinChannel(channelID) {
-  var buf = new Buffer(12)
-  buf.write("\x01\x01\x00\x0C", 0)
-  buf.writeInt32BE(channelID, 4)
-  buf.write("\x00\x00\x00\x00", 8)
-  return buf
-}
-
-function composeHeartbeat() {
-  return new Buffer("\x01\x02\x00\x04")
-}
 
 function Conn(channelID) {
   this.channelID = channelID
@@ -45,7 +33,7 @@ Conn.prototype.handleConnection = function(socket) {
 }
 
 Conn.prototype.joinChannel = function() {
-  this.socket.write(composeJoinChannel(this.channelID))
+  this.socket.write(protocol.composeJoinChannel(this.channelID))
 }
 
 Conn.prototype.setupHeartbeat = function() {
@@ -55,12 +43,12 @@ Conn.prototype.setupHeartbeat = function() {
 }
 
 Conn.prototype.sendHeartbeat = function() {
-  this.socket.write(composeHeartbeat())
+  this.socket.write(protocol.composeHeartbeat())
 }
 
 Conn.prototype.handleData = function() {
   this.socket.on("data", function(buf) {
-    var messages = parse(buf)
+    var messages = protocol.parse(buf)
     messages.forEach(function(m) {
       this.emit(m.type, m)
     }, this)
