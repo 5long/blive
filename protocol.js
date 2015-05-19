@@ -14,6 +14,7 @@ function parseColor(colorNum) {
   colorBuf.writeUIntBE(colorNum, 0, colorBuf.length)
 
   return {
+    hex: ('000000' + colorNum.toString(16)).slice(-6),
     red: colorBuf[0],
     green: colorBuf[1],
     blue: colorBuf[2],
