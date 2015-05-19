@@ -39,7 +39,7 @@ function parseComment(buf) {
   return [{
     nick: payload.info[2][1],
     message: decode(payload.info[1])
-  }]
+  }].concat(parse(remainingBuf))
 }
 
 function parseUnknown(buf) {
@@ -54,7 +54,14 @@ var parsers = {
   unknown: parseUnknown
 }
 
+// Circular recursion here. Just ignore warning from JSHint
+// jshint -W003
 function parse(buf) {
+// jshint +W003
+  if (!buf.length) {
+    return []
+  }
+  
   var typeFlag = buf.readUIntBE(0, 2)
 
   var type = TYPES[typeFlag] || 'unknown'
