@@ -9,6 +9,17 @@ function parseOnlineNumber(buf) {
   }].concat(parse(buf.slice(ONLINE_NUMBER_PKT_LENGTH)))
 }
 
+function parseColor(colorNum) {
+  var colorBuf = new Buffer(3)
+  colorBuf.writeUIntBE(colorNum, 0, colorBuf.length)
+
+  return {
+    red: colorBuf[0],
+    green: colorBuf[1],
+    blue: colorBuf[2],
+  }
+}
+
 var IGNORE_COMMANDS = new Set(['PREPARING', 'LIVE'])
 
 function parseComment(buf) {
@@ -28,19 +39,12 @@ function parseComment(buf) {
     return parseUnknown(buf)
   }
 
-  var colorBuf = new Buffer(3)
-  colorBuf.writeUIntBE(payload.info[0][3], 0, colorBuf.length)
-
   return [{
     type: 'comment',
     uid: payload.info[2][0],
     nick: payload.info[2][1],
     text: decode(payload.info[1]),
-    color: {
-      red: colorBuf[0],
-      green: colorBuf[1],
-      blue: colorBuf[2],
-    }
+    color: parseColor(payload.info[0][3])
   }].concat(parse(remainingBuf))
 }
 
