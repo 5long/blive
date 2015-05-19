@@ -37,7 +37,11 @@ function parseComment(buf) {
   }
 
   if (payload.cmd !== 'DANMU_MSG') {
-    return parseUnknown(buf)
+    return [{
+      type: 'unknown',
+      payload: payload,
+      buf: buf,
+    }]
   }
 
   return [{
