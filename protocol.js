@@ -1,15 +1,11 @@
 var decode = require("ent/decode")
 
+var ONLINE_NUMBER_PKT_LENGTH = 6
 function parseOnlineNumber(buf) {
-  if (buf.length !== 6) {
-    console.log("Can't easily handle number buffer: ", buf)
-    return
-  }
-
   return [{
     type: 'onlineNumber',
     number: buf.readUIntBE(2, 4)
-  }]
+  }].concat(parse(buf.slice(ONLINE_NUMBER_PKT_LENGTH)))
 }
 
 var IGNORE_COMMANDS = new Set(['PREPARING', 'LIVE'])
