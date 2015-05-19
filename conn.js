@@ -74,7 +74,7 @@ Conn.Conn = Conn
 function newDumbConnection(channelID) {
   var conn = new Conn(channelID)
   conn.on("comment", function(c) {
-    console.log("%s : %s", c.nick, c.message)
+    console.log("%s : %s", c.nick, c.text)
   }).on("unknown", function(m) {
     console.log("unknown message: %j", m)
   }).on("onlineNumber", function(m) {
