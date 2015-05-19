@@ -12,7 +12,7 @@ function parseOnlineNumber(buf) {
   }]
 }
 
-const ignoreCommands = new Set(['PREPARING', 'LIVE'])
+var IGNORE_COMMANDS = new Set(['PREPARING', 'LIVE'])
 
 function parseComment(buf) {
   var pktLength = buf.readUIntBE(2, 2)
@@ -28,7 +28,7 @@ function parseComment(buf) {
     console.log("More message buf: %s", remainingBuf)
   }
 
-  if (ignoreCommands.has(payload.cmd)) {
+  if (IGNORE_COMMANDS.has(payload.cmd)) {
     return []
   }
 

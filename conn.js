@@ -3,8 +3,8 @@ var net = require("net")
   , EventEmitter = require("events")
   , inherits = require("util").inherits
 
-const host = "livecmt.bilibili.com"
-const port = "88"
+var HOST = "livecmt.bilibili.com"
+  , PORT = "88"
 
 function Conn(channelID) {
   this.channelID = channelID
@@ -13,7 +13,7 @@ function Conn(channelID) {
 inherits(Conn, EventEmitter)
 
 Conn.prototype.connect = function() {
-  this.socket = net.connect(port, host)
+  this.socket = net.connect(PORT, HOST)
   this.handleEvents()
   return this
 }
