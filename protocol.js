@@ -23,11 +23,6 @@ function parseComment(buf) {
 
   var remainingBuf = buf.slice(pktLength)
 
-  // TODO: parse this as well
-  if (remainingBuf.length) {
-    console.log("More message buf: %s", remainingBuf)
-  }
-
   if (IGNORE_COMMANDS.has(payload.cmd)) {
     return []
   }
