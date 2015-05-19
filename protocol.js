@@ -24,7 +24,7 @@ function parseComment(buf) {
   var remainingBuf = buf.slice(pktLength)
 
   if (IGNORE_COMMANDS.has(payload.cmd)) {
-    return []
+    return parse(remainingBuf)
   }
 
   return [{
