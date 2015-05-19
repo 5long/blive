@@ -25,6 +25,7 @@ function parseComment(buf) {
 
   return [{
     type: 'comment',
+    uid: payload.info[2][0],
     nick: payload.info[2][1],
     message: decode(payload.info[1])
   }].concat(parse(remainingBuf))
