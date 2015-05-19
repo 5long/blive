@@ -28,11 +28,19 @@ function parseComment(buf) {
     return parseUnknown(buf)
   }
 
+  var colorBuf = new Buffer(3)
+  colorBuf.writeUIntBE(payload.info[0][3], 0, colorBuf.length)
+
   return [{
     type: 'comment',
     uid: payload.info[2][0],
     nick: payload.info[2][1],
-    message: decode(payload.info[1])
+    message: decode(payload.info[1]),
+    color: {
+      red: colorBuf[0],
+      green: colorBuf[1],
+      blue: colorBuf[2],
+    }
   }].concat(parse(remainingBuf))
 }
 
