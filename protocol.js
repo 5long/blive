@@ -1,3 +1,4 @@
+// jshint -W003
 var decode = require("ent/decode")
 
 var ONLINE_NUMBER_PKT_LENGTH = 6
@@ -23,6 +24,10 @@ function parseComment(buf) {
     return parse(remainingBuf)
   }
 
+  if (payload.cmd !== 'DANMU_MSG') {
+    return parseUnknown(buf)
+  }
+
   return [{
     type: 'comment',
     uid: payload.info[2][0],
@@ -43,14 +48,11 @@ var parsers = {
   '4': parseComment,
 }
 
-// Circular recursion here. Just ignore warning from JSHint
-// jshint -W003
 function parse(buf) {
-// jshint +W003
   if (!buf.length) {
     return []
   }
-  
+
   var typeFlag = buf.readUIntBE(0, 2)
 
   return (parsers[typeFlag] || parseUnknown)(buf)
