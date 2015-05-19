@@ -71,15 +71,16 @@ function parse(buf) {
 }
 
 function composeJoinChannel(channelID) {
-  var buf = new Buffer(12)
-  buf.write("\x01\x01\x00\x0C", 0)
+  var buf = new Buffer([
+    1, 1, 0, 0xc,
+    null, null, null, null,
+    0, 0, 0, 0])
   buf.writeUIntBE(channelID, 4, 4)
-  buf.write("\x00\x00\x00\x00", 8)
   return buf
 }
 
 function composeHeartbeat() {
-  return new Buffer("\x01\x02\x00\x04")
+  return new Buffer([1, 2, 0, 4])
 }
 
 module.exports = {
