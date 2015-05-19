@@ -1,10 +1,5 @@
 var decode = require("ent/decode")
 
-const TYPES = {
-  '1': 'onlineNumber',
-  '4': 'comment'
-}
-
 function parseOnlineNumber(buf) {
   if (buf.length !== 6) {
     console.log("Can't easily handle number buffer: ", buf)
@@ -12,6 +7,7 @@ function parseOnlineNumber(buf) {
   }
 
   return [{
+    type: 'onlineNumber',
     number: buf.readUIntBE(2, 4)
   }]
 }
@@ -37,6 +33,7 @@ function parseComment(buf) {
   }
 
   return [{
+    type: 'comment',
     nick: payload.info[2][1],
     message: decode(payload.info[1])
   }].concat(parse(remainingBuf))
@@ -44,14 +41,14 @@ function parseComment(buf) {
 
 function parseUnknown(buf) {
   return [{
+    type: 'unknown',
     buffer: buf
   }]
 }
 
 var parsers = {
-  onlineNumber: parseOnlineNumber,
-  comment: parseComment,
-  unknown: parseUnknown
+  '1': parseOnlineNumber,
+  '4': parseComment,
 }
 
 // Circular recursion here. Just ignore warning from JSHint
@@ -64,17 +61,7 @@ function parse(buf) {
   
   var typeFlag = buf.readUIntBE(0, 2)
 
-  var type = TYPES[typeFlag] || 'unknown'
-
-  var messages = parsers[type](buf)
-
-  messages.forEach(function(m) {
-    if (!m.type) {
-      m.type = type
-    }
-  })
-
-  return messages
+  return (parsers[typeFlag] || parseUnknown)(buf)
 }
 
 function composeJoinChannel(channelID) {
