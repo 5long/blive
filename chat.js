@@ -42,7 +42,7 @@ function main() {
     .on("comment", function(c) {
       console.log("%s : %s", c.nick, c.text)
     }).on("unknown", function(m) {
-      console.log("unknown message: %s", m)
+      console.log("unknown message: %j", m)
     }).on("onlineNumber", function(n) {
       console.log("# Online: %d", n)
     })

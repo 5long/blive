@@ -76,7 +76,7 @@ function newDumbConnection(channelID) {
   conn.on("comment", function(c) {
     console.log("%s : %s", c.nick, c.message)
   }).on("unknown", function(m) {
-    console.log("unknown message: %s", m)
+    console.log("unknown message: %j", m)
   }).on("onlineNumber", function(m) {
     console.log("# Online: %d", m.number)
   })
