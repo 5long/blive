@@ -35,7 +35,7 @@ function parseComment(buf) {
     type: 'comment',
     uid: payload.info[2][0],
     nick: payload.info[2][1],
-    message: decode(payload.info[1]),
+    text: decode(payload.info[1]),
     color: {
       red: colorBuf[0],
       green: colorBuf[1],

@@ -40,7 +40,7 @@ module.exports = Chat
 function main() {
   Chat.create(process.argv[2] || 5446)
     .on("comment", function(c) {
-      console.log("%s : %s", c.nick, c.message)
+      console.log("%s : %s", c.nick, c.text)
     }).on("unknown", function(m) {
       console.log("unknown message: %s", m)
     }).on("onlineNumber", function(n) {
