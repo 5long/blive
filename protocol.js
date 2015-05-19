@@ -12,14 +12,14 @@ function parseOnlineNumber(buf) {
   }
 
   return [{
-    number: buf.readIntBE(2, 4)
+    number: buf.readUIntBE(2, 4)
   }]
 }
 
 const ignoreCommands = new Set(['PREPARING', 'LIVE'])
 
 function parseComment(buf) {
-  var pktLength = buf.readIntBE(2, 2)
+  var pktLength = buf.readUIntBE(2, 2)
 
   var actualBuf = buf.slice(4, pktLength)
 
@@ -55,7 +55,7 @@ var parsers = {
 }
 
 function parse(buf) {
-  var typeFlag = buf.readIntBE(0, 2)
+  var typeFlag = buf.readUIntBE(0, 2)
 
   var type = TYPES[typeFlag] || 'unknown'
 
@@ -73,7 +73,7 @@ function parse(buf) {
 function composeJoinChannel(channelID) {
   var buf = new Buffer(12)
   buf.write("\x01\x01\x00\x0C", 0)
-  buf.writeInt32BE(channelID, 4)
+  buf.writeUIntBE(channelID, 4, 4)
   buf.write("\x00\x00\x00\x00", 8)
   return buf
 }
