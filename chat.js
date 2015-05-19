@@ -1,7 +1,7 @@
 var Conn = require('./conn')
   , relay = require('./relay')
   , inherits = require("util").inherits
-  , EventEmitter = require("events").EventEmitter
+  , EventEmitter = require("events")
 
 function Chat(channelID) {
   EventEmitter.call(this)
