@@ -36,6 +36,14 @@ function parseComment(buf) {
     return parse(remainingBuf)
   }
 
+  if (payload.cmd === 'ROOM_BLOCK_INTO') {
+    return [{
+      type: 'userBlocked',
+      uid: String(payload.uid),
+      nick: payload.uname,
+    }].concat(parse(remainingBuf))
+  }
+
   if (payload.cmd !== 'DANMU_MSG') {
     return [{
       type: 'unknown',
