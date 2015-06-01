@@ -2,7 +2,7 @@
   "name": "blive",
   "version": "0.1.0",
   "description": "Live utilities for live.bilibili.com",
-  "main": "conn.js",
+  "main": "main.js",
   "bin": "bin/blive.js",
   "dependencies": {
     "cli": "^0.7.0",
