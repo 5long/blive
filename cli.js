@@ -1,10 +1,28 @@
 #!/usr/bin/env node
-
 var cli = require("cli")
 
 var commands = {
   fans: function(args) {
-    //
+    var uid = args[0]
+
+    if (!(/^\d+$/.test(uid))) {
+      console.error(
+        "User ID must be a number, got %j instead.",
+        uid)
+      process.exit(3)
+    }
+
+    var FanService = require("./fans/service")
+
+    var fs = new FanService(uid)
+
+    fs.on("newFan", function(fan) {
+      console.log("%j", fan)
+    }).start()
+
+    process.on("SIGUSR2", function() {
+      fs.fetch()
+    })
   },
   chat: function(args) {
     var channelID = args[0]

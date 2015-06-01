@@ -6,7 +6,9 @@
   "bin": "cli.js",
   "dependencies": {
     "cli": "^0.7.0",
-    "ent": "^2.2.0"
+    "ent": "^2.2.0",
+    "request": "^2.55.0",
+    "whacko": "^0.18.0"
   },
   "devDependencies": {},
   "preferGlobal": true,
