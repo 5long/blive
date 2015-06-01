@@ -12,7 +12,7 @@ var commands = {
       process.exit(3)
     }
 
-    var FanService = require("./fans/service")
+    var FanService = require("../fans/service")
 
     var fs = new FanService(uid)
 
@@ -24,7 +24,7 @@ var commands = {
       fs.fetch()
     })
   },
-  chat: function(args) {
+  chat: function(args, opt) {
     var channelID = args[0]
 
     if (!(/^\d+$/.test(channelID))) {
@@ -34,7 +34,7 @@ var commands = {
       process.exit(3)
     }
 
-    var Chat = require("./chat")
+    var Chat = require("../chat")
 
     Chat.create(channelID)
       .on("comment", function(c) {

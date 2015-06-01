@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Live utilities for live.bilibili.com",
   "main": "conn.js",
-  "bin": "cli.js",
+  "bin": "bin/blive.js",
   "dependencies": {
     "cli": "^0.7.0",
     "ent": "^2.2.0",
