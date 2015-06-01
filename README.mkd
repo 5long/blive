@@ -1,0 +1,31 @@
+# Blive
+
+Utilities for BiliBili live streaming service
+
+## Installation
+
+With [npm](https://www.npmjs.com/):
+
+```sh
+$ npm install -g blive
+```
+
+## Usage
+
+Connect to chat room (a.k.a Danmaku) of http://live.bilibili.com/12071
+
+```sh
+$ blive chat 12701
+```
+
+Print my new fans in JSON stream
+
+```sh
+$ blive fans 451142
+```
+
+Right now that's pretty much all of it. See example/ for more usage.
+
+## LICENSE
+
+Public domain. See UNLICENSE for more.

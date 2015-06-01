@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+function send_notification() {
+  imgfile="$(download_avatar $2 $3)"
+  msg="新粉丝：$1"
+  notify-send -t 10000 -i "$imgfile" "$msg"
+}
+
+function download_avatar() {
+  imgfile="$(mktemp -t bili-user-$2-XXX.png)"
+  curl -sS "$1" > "$imgfile"
+  echo "$imgfile"
+}
+
+function blived() {
+  blive fans "$1" | jq -r --unbuffered '.nick, .avatar, .uid'
+}
+
+uid="${1:-451142}"
+
+while {
+  read -r nick
+  read -r avatar
+  read -r uid
+}; do
+  send_notification "$nick" "$avatar" "$uid"
+done < <(blived $uid)
