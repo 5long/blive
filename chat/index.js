@@ -1,5 +1,5 @@
 var Conn = require('./conn')
-  , relay = require('./relay')
+  , relay = require('../util/relay')
   , inherits = require("util").inherits
   , EventEmitter = require("events")
 
