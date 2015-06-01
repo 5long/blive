@@ -1,20 +1,20 @@
 {
-  "name": "bilichat",
+  "name": "blive",
   "version": "0.1.0",
-  "description": "Chat client for live.bilibili.com",
+  "description": "Live utilities for live.bilibili.com",
   "main": "conn.js",
+  "bin": "cli.js",
   "dependencies": {
+    "cli": "^0.7.0",
     "ent": "^2.2.0"
   },
   "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/5long/bilichat.git"
-  },
+  "preferGlobal": true,
+  "repository": "5long/blive",
   "author": "Whyme Lyu",
   "license": "Public Domain",
   "bugs": {
-    "url": "https://github.com/5long/bilichat/issues"
+    "url": "https://github.com/5long/blive/issues"
   },
-  "homepage": "https://github.com/5long/bilichat#readme"
+  "homepage": "https://github.com/5long/blive#readme"
 }

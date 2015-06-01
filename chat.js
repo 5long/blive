@@ -45,6 +45,9 @@ function main() {
       console.log("unknown message: %j", m)
     }).on("onlineNumber", function(n) {
       console.log("# Online: %d", n)
+    }).on("userBlocked", function(b) {
+      console.log("User %s[%s] is blocked by admin",
+                 b.nick, b.uid)
     })
 }
 
