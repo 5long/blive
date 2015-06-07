@@ -16,12 +16,12 @@ var commands = {
 
     var fs = new FanService(uid)
 
-    fs.on("newFan", function(fan) {
+    fs.on("fan", function(fan) {
       console.log("%j", fan)
     }).start()
 
     process.on("SIGUSR2", function() {
-      fs.fetch()
+      fs.fetchLatest()
     })
   },
   chat: function(args, opt) {

@@ -1,6 +1,7 @@
 var fetchFans = require("./fetch").fetchFans
   , inherits = require("util").inherits
   , EventEmitter = require("events")
+  , _ = require("lodash")
 
 function FanService(uid) {
   EventEmitter.call(this)
@@ -12,8 +13,35 @@ inherits(FanService, EventEmitter)
 
 FanService.prototype.start = function() {
   this.fetchInterval = setInterval(
-    this.fetch.bind(this), 1 * 60 * 1000)
-  this.fetch({triggerEvent: false})
+    this.fetchLatest.bind(this), 1 * 60 * 1000)
+  this.fetchAll()
+}
+
+FanService.prototype.fetchLatest = function() {
+  this.fetch({
+    page: 1,
+    markAsNew: true,
+    triggerEvent: true,
+  })
+}
+
+FanService.prototype.fetchAll = function() {
+  // Next page?
+  var currentPage = 1
+
+  function nextPageIfPossible(fans) {
+    if (!fans.length) return
+
+    this.fetch({
+      page: currentPage,
+      markAsNew: false,
+      triggerEvent: false,
+    }, nextPageIfPossible.bind(this))
+
+    currentPage++
+  }
+
+  nextPageIfPossible.call(this, [0])
 }
 
 FanService.prototype.stop = function() {
@@ -22,10 +50,17 @@ FanService.prototype.stop = function() {
   }
 }
 
-FanService.prototype.fetch = function(opt) {
-  opt = opt || {triggerEvent: true}
-  fetchFans(this.uid, function(e, fans) {
+FanService.prototype.fetch = function(opt, cb) {
+  _.defaults(opt, {
+    triggerEvent: true,
+    markAsNew: true,
+    page: 1,
+  })
+  cb = cb || _.noop
+
+  fetchFans(this.uid, opt.page, function(e, fans) {
     if (!e) this.handleNewFans(fans, opt)
+    cb(fans)
   }.bind(this))
 }
 
@@ -35,10 +70,14 @@ FanService.prototype.handleNewFans = function(fans, opt) {
       return
     }
 
+    fan.isNew = !!(opt.markAsNew)
+    this.add(fan)
+
     if (opt.triggerEvent) {
       this.emit("newFan", fan)
     }
-    this.add(fan)
+
+    this.emit("fan", fan)
   }, this)
 }
 
@@ -55,15 +94,13 @@ FanService.FanService = FanService
 
 function main(uid) {
   var fs = new FanService(uid)
-    , execFile = require("child_process").execFile
-    , path = require("path")
-  fs.on("newFan", function(fan) {
-    execFile(path.join(__dirname, "./disp.sh"),
-             [fan.nick, fan.avatar, fan.uid])
+
+  fs.on("fan", function(fan) {
+    console.log(fan)
   }).start()
 
   process.on("SIGUSR2", function() {
-    fs.fetch()
+    fs.fetchLatest()
   })
 }
 
