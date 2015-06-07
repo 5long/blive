@@ -21,12 +21,10 @@ FanService.prototype.fetchLatest = function() {
   this.fetch({
     page: 1,
     markAsNew: true,
-    triggerEvent: true,
   })
 }
 
 FanService.prototype.fetchAll = function() {
-  // Next page?
   var currentPage = 1
 
   function nextPageIfPossible(fans) {
@@ -35,7 +33,6 @@ FanService.prototype.fetchAll = function() {
     this.fetch({
       page: currentPage,
       markAsNew: false,
-      triggerEvent: false,
     }, nextPageIfPossible.bind(this))
 
     currentPage++
@@ -52,7 +49,6 @@ FanService.prototype.stop = function() {
 
 FanService.prototype.fetch = function(opt, cb) {
   _.defaults(opt, {
-    triggerEvent: true,
     markAsNew: true,
     page: 1,
   })
@@ -72,10 +68,6 @@ FanService.prototype.handleNewFans = function(fans, opt) {
 
     fan.isNew = !!(opt.markAsNew)
     this.add(fan)
-
-    if (opt.triggerEvent) {
-      this.emit("newFan", fan)
-    }
 
     this.emit("fan", fan)
   }, this)
