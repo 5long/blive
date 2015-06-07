@@ -9,9 +9,10 @@ function AppError(statusCode) {
 }
 inherits(AppError, Error)
 
-function fetchUserSpace(uid, cb) {
+function fetchUserSpace(uid, page, cb) {
   return request({
     url: "http://space.bilibili.com/" + uid + "/fans.html",
+    qs: {page: page},
     gzip: true,
   }, function(e, res, body) {
     if (e) {
@@ -26,8 +27,8 @@ function fetchUserSpace(uid, cb) {
   })
 }
 
-function fetchFans(uid, cb) {
-  fetchUserSpace(uid, function(e, body) {
+function fetchFans(uid, page, cb) {
+  fetchUserSpace(uid, page, function(e, body) {
     if (e) { return cb(e) }
 
     var $ = html.load(body)
@@ -40,8 +41,8 @@ function fetchFans(uid, cb) {
   })
 }
 
-function main(uid) {
-  fetchFans(uid, function(e, fans) {
+function main(uid, page) {
+  fetchFans(uid, page, function(e, fans) {
     if (e) {
       return console.log(e)
     }
@@ -51,7 +52,7 @@ function main(uid) {
 }
 
 if (require.main === module) {
-  main(process.argv[2] || 451142)
+  main(process.argv[2] || 451142, process.argv[3] || 1)
 }
 
 module.exports = fetchFans
