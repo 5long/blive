@@ -2,6 +2,7 @@ var Conn = require('./conn')
   , relay = require('../util/relay')
   , inherits = require("util").inherits
   , EventEmitter = require("events")
+  , fetchHostID = require("./scraper").fetchHostID
 
 function Chat(channelID) {
   EventEmitter.call(this)
@@ -28,6 +29,14 @@ Chat.prototype.handleOnlineNumber = function(m) {
 
   this.onlineNumber = m.number
   this.emit("onlineNumber", this.onlineNumber)
+}
+
+Chat.prototype.getHostID = function(cb) {
+  if (this.hostID) return setImmediate(cb, null, this.hostID)
+
+  fetchHostID(this.id, function(e, hostID) {
+    cb(null, this.hostID = hostID)
+  }.bind(this))
 }
 
 Chat.create = function(channelID) {
