@@ -11,10 +11,11 @@ function FanService(uid) {
 
 inherits(FanService, EventEmitter)
 
-FanService.prototype.start = function() {
+FanService.prototype.start = function(cb) {
+  cb = cb || _.noop
   this.fetchInterval = setInterval(
     this.fetchLatest.bind(this), 1 * 60 * 1000)
-  this.fetchAll()
+  this.fetchAll(cb)
 }
 
 FanService.prototype.fetchLatest = function() {
@@ -24,16 +25,18 @@ FanService.prototype.fetchLatest = function() {
   })
 }
 
-FanService.prototype.fetchAll = function() {
+FanService.prototype.fetchAll = function(cb) {
   var currentPage = 1
 
   function nextPageIfPossible(fans) {
-    if (!fans.length) return
+    if (!fans.length) return cb()
 
-    this.fetch({
-      page: currentPage,
-      markAsNew: false,
-    }, nextPageIfPossible.bind(this))
+    setTimeout(function(page) {
+      this.fetch({
+        page: page,
+        markAsNew: false,
+      }, nextPageIfPossible.bind(this))
+    }.bind(this, currentPage), 500)
 
     currentPage++
   }
