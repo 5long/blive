@@ -1,6 +1,8 @@
 var request = require("request")
   , html = require("whacko")
 
+const DEFAULT_AVATAR = 'http://static.hdslb.com/images/member/noface.gif'
+
 function parse($) {
   return {
     avatar: $('.facebox img').attr('src'),
@@ -9,18 +11,24 @@ function parse($) {
   }
 }
 
+function normalize(user) {
+  if (user.avatar.endsWith('templets/images/1.jpg')) {
+    user.avatar = DEFAULT_AVATAR
+  }
+  return user
+}
+
 function fetch(userID, cb) {
   request({
     url: 'http://space.bilibili.com/' + userID,
     gzip: true,
   }, function(e, res, body) {
     if (e) return cb(e)
-    cb(null, parse(html.load(body)))
+    cb(null, normalize(parse(html.load(body))))
   })
 }
 
 module.exports = fetch
-fetch.fetch = fetch
 
 function main(userID) {
   fetch(userID, function(e, user) {
