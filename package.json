@@ -2,18 +2,30 @@
   "name": "blive",
   "version": "0.1.0",
   "description": "Live utilities for live.bilibili.com",
-  "main": "main.js",
+  "main": "ui/main",
   "bin": "bin/blive.js",
   "dependencies": {
     "cli": "^0.7.0",
     "ent": "^2.2.0",
+    "exoskeleton": "^0.7.0",
+    "hogan.js": "^3.0.2",
+    "jquery": "^2.1.4",
     "lodash": "^3.9.3",
+    "normalize.css": "^3.0.3",
     "request": "^2.55.0",
-    "whacko": "^0.18.0"
+    "whacko": "^0.18.0",
+    "zepto-browserify": "^1.1.6-1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "electron-prebuilt": "^0.27.2"
+  },
   "preferGlobal": true,
   "repository": "5long/blive",
+  "scripts": {
+    "build": "cp -pu node_modules/normalize.css/normalize.css ui/css/vendor",
+    "prepublish": "npm run build",
+    "start": "electron ."
+  },
   "author": "Whyme Lyu",
   "license": "Unlicense",
   "bugs": {

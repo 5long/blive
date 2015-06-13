@@ -1,0 +1,37 @@
+body {
+  font-size: 24px;
+}
+
+.comment-list {
+  color: #9eccee;
+  list-style: none;
+  opacity: 0.8;
+}
+
+.comment-item {
+  position: relative;
+  margin-left: 2em;
+  min-height: 2em;
+  line-height: 2;
+  text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+.comment-content {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.comment-author-nick::after {
+  content: "：";
+}
+
+.comment-author-avatar {
+  position: absolute;
+  top: 0;
+  left: -2em;
+  width: 2em;
+  height: 2em;
+
+  -webkit-clip-path: circle(0.9em);
+}

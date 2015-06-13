@@ -1,0 +1,13 @@
+html {
+  /* font-family: "Source Han Sans SC"; */
+  font-family: "Source Han Sans", sans-serif;
+}
+
+html, body {
+  overflow: hidden;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}

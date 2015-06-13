@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Title</title>
+  <link rel="stylesheet" href="css/vendor/normalize.css" type="text/css" />
+  <link rel="stylesheet" href="css/base.css" type="text/css" />
+  <link rel="stylesheet" href="css/master.css" type="text/css" />
+</head>
+
+<body>
+  <ul id="comments" class="comment-list">
+  </ul>
+
+  <template id="comment">
+    <div class="comment-content">
+      <img class="comment-author-avatar"
+          src="{{ author.avatar }}">
+      <span class="comment-author-nick">{{ author.nick }}</span>
+      <span class="comment-text"
+            style="color: #{{ color.hex }}">{{ text }}</span>
+    </div>
+  </template>
+
+  <script src="app/main.js"></script>
+</body>
+</html>
