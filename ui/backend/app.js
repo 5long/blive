@@ -21,6 +21,7 @@ function createMainWindow(app) {
     frame: false,
     transparent: true,
     'skip-taskbar': true,
+    'always-on-top': true,
   }, process.env.BLIVE_DEV ? dimension.dev : dimension.whyme))
 
   win.loadUrl('file://' + app.root + '/index.html')

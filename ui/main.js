@@ -19,5 +19,5 @@ function main(channelID) {
 }
 
 if (process.type === 'browser') {
-  main(process.argv[2] || '5446')
+  main(process.argv[2])
 }

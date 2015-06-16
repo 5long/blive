@@ -1,9 +1,11 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1">
   <title>Title</title>
-  <link rel="stylesheet" href="css/vendor/normalize.css" type="text/css" />
+  <link rel="stylesheet" href="css/vendor/pure.css" type="text/css" />
   <link rel="stylesheet" href="css/base.css" type="text/css" />
   <link rel="stylesheet" href="css/master.css" type="text/css" />
 </head>
@@ -20,6 +22,22 @@
       <span class="comment-text"
             style="color: #{{ color.hex }}">{{ text }}</span>
     </div>
+  </template>
+
+  <div id="config" class="config" hidden>
+  </div>
+
+  <template id="config-tpl">
+  <form class="config-form pure-form pure-form-stacked">
+    <fieldset>
+      <legend>所有软件都需要设置</legend>
+        <label for="channel-id">
+          直播间数字 ID
+        </label>
+        <input id="channel-id" type="text"
+          value="{{ channelID }}" placeholder="直播间ID">
+    </fieldset>
+  </form>
   </template>
 
   <script src="app/main.js"></script>

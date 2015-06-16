@@ -7,8 +7,8 @@ var View = require("exoskeleton").View
 
 module.exports = View.extend({
   el: "#comments",
-  initialize: function(args) {
-    this.channelID = args.channelID
+  initialize: function(config) {
+    this.channelID = config.get("channelID")
     this.msgs = new Messages()
     this.service = ChatService.create(this.channelID)
     this.tick = 0
