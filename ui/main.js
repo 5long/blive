@@ -3,8 +3,8 @@
  */
 
 module.exports = {
-  Chat: require("../chat"),
-  FanService: require("../fans/service"),
+  Chat: require("../lib/chat"),
+  FanService: require("../lib/fans/service"),
 }
 
 // Will move channelID to UI configuration later

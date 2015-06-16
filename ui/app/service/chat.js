@@ -1,3 +1,3 @@
 var remote = require("remote")
 
-module.exports = remote.require("../chat")
+module.exports = remote.require("../lib/chat")
