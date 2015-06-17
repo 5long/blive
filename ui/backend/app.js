@@ -22,9 +22,19 @@ function createMainWindow(app) {
     transparent: true,
     'skip-taskbar': true,
     'always-on-top': true,
+    type: 'splash',
+    'web-preferences': {
+      "direct-write": true
+    },
   }, process.env.BLIVE_DEV ? dimension.dev : dimension.whyme))
 
   win.loadUrl('file://' + app.root + '/index.html')
+
+  win.on("blur", function() {
+    win.send("windowBlur")
+  }).on("focus", function() {
+    win.send("windowFocus")
+  })
 
   if (process.env.BLIVE_DEV) {
     win.openDevTools()

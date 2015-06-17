@@ -1,5 +1,21 @@
 body {
   font-size: 1.5em;
+  color: white;
+}
+
+.nav-bar {
+  -webkit-app-region: drag;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2em;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+body.hover .nav-bar {
+  display: block;
 }
 
 .comment-list {
