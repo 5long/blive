@@ -12,7 +12,7 @@ var commands = {
       process.exit(3)
     }
 
-    var FanService = require("../lib/fans/service")
+    var FanService = require("..").FanService
 
     var fs = new FanService(uid)
 
@@ -34,7 +34,7 @@ var commands = {
       process.exit(3)
     }
 
-    var Chat = require("../lib/chat")
+    var Chat = require("..").Chat
 
     Chat.create(channelID)
       .on("comment", function(c) {

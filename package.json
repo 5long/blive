@@ -2,7 +2,7 @@
   "name": "blive",
   "version": "0.1.0",
   "description": "Live utilities for live.bilibili.com",
-  "main": "ui/main",
+  "main": "lib",
   "bin": "bin/blive.js",
   "dependencies": {
     "cli": "^0.7.0",
@@ -24,8 +24,8 @@
   "scripts": {
     "build": "cp -pu node_modules/purecss/build/pure.css ui/css/vendor",
     "prepublish": "npm run build",
-    "start": "electron .",
-    "package": "electron-packager . BLive --platform=win32 --arch=ia32 --app-version=0.0.1-dev --version=0.27.3 --out build/"
+    "start": "electron ./ui/",
+    "package": "electron-packager ./ui/ BLive --platform=win32 --arch=ia32 --app-version=0.0.1-dev --version=0.27.3 --out build/"
   },
   "author": "Whyme Lyu",
   "license": "Unlicense",
