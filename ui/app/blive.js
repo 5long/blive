@@ -1,43 +1,41 @@
 var Chat = require("./view/chat")
   , Config = require("./model/config")
   , ConfigView = require("./view/config")
-  , _ = require("lodash")
-  , Events = require("exoskeleton").Events
+  , View = require("exoskeleton").View
 
-var app = module.exports = {
+module.exports = View.extend({
+  el: 'body',
   start: function(args) {
-    app.loadConfig(args)
-    if (app.config.get("channelID")) app.chat()
-    else app.showConfigView()
+    this.loadConfig(args)
+    if (this.config.get("channelID")) this.chat()
+      else this.showConfigView()
   },
   loadConfig: function(args) {
-    app.config = new Config()
-    app.loadArgs(args)
-    app.initConfigView()
+    this.config = new Config()
+    this.loadArgs(args)
+    this.initConfigView()
   },
   initConfigView: function() {
-    app.configView = new ConfigView({
-      model: app.config,
+    this.configView = new ConfigView({
+      model: this.config,
     }).render()
 
-    app.listenTo(app.configView, 'submit', app.submitConfig)
+    this.listenTo(this.configView, 'submit', this.submitConfig)
   },
   showConfigView: function() {
-    app.configView.show()
+    this.configView.show()
   },
   loadArgs: function(args) {
     if (args.channelID) {
-      app.config.set("channelID", args.channelID)
+      this.config.set("channelID", args.channelID)
     }
   },
   chat: function() {
-    app.view = new Chat(app.config)
-    app.view.render()
+    this.chatView = new Chat(this.config)
+    this.chatView.render()
   },
   submitConfig: function() {
-    app.configView.hide()
-    app.chat()
+    this.configView.hide()
+    this.chat()
   },
-}
-
-_.extend(app, Events)
+})

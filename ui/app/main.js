@@ -3,8 +3,9 @@ var ipc = require("ipc")
   , body = $(document.body)
 
 ipc.on("backendReady", function(args) {
-  var Blive = this.app = require("./app/blive.js")
-  Blive.start(args)
+  var BLive = require("./app/blive.js")
+  this.app = new BLive()
+  this.app.start(args)
 }.bind(this))
 
 ipc.on("windowBlur", function() {
