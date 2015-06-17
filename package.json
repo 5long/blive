@@ -2,6 +2,7 @@
   "name": "blive",
   "version": "0.1.0",
   "description": "Live utilities for live.bilibili.com",
+  "files": ["bin/", "example/", "lib/", "README.mkd", "UNLICENSE"],
   "main": "lib",
   "bin": "bin/blive.js",
   "dependencies": {
