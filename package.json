@@ -2,7 +2,13 @@
   "name": "blive",
   "version": "0.1.0",
   "description": "Live utilities for live.bilibili.com",
-  "files": ["bin/", "example/", "lib/", "README.mkd", "UNLICENSE"],
+  "files": [
+    "bin/",
+    "example/",
+    "lib/",
+    "README.mkd",
+    "UNLICENSE"
+  ],
   "main": "lib",
   "bin": "bin/blive.js",
   "dependencies": {
@@ -18,12 +24,14 @@
   "devDependencies": {
     "electron-packager": "^4.1.2",
     "electron-prebuilt": "^0.27.3",
-    "purecss": "^0.6.0"
+    "font-awesome": "^4.3.0",
+    "purecss": "^0.6.0",
+    "shelljs": "^0.5.1"
   },
   "preferGlobal": true,
   "repository": "5long/blive",
   "scripts": {
-    "build": "cp -pu node_modules/purecss/build/pure.css ui/css/vendor",
+    "build": "node make css",
     "prepublish": "npm run build",
     "start": "electron ./ui/",
     "package": "electron-packager ./ui/ BLive --platform=win32 --arch=ia32 --app-version=0.0.1-dev --version=0.27.3 --out build/"
