@@ -5,7 +5,6 @@ body {
 .comment-list {
   color: #9eccee;
   list-style: none;
-  opacity: 0.8;
 }
 
 .comment-item {
@@ -24,6 +23,11 @@ body {
 
 .comment-author-nick::after {
   content: "：";
+}
+
+.comment-author-nick,
+.comment-text {
+  opacity: 0.8;
 }
 
 .comment-author-avatar {
