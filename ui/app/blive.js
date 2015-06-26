@@ -5,10 +5,13 @@ var Chat = require("./view/chat")
 
 module.exports = View.extend({
   el: 'body',
+  events: {
+    'click .config-icon': 'showConfigView',
+  },
   start: function(args) {
     this.loadConfig(args)
     if (this.config.get("channelID")) this.chat()
-      else this.showConfigView()
+    else this.showConfigView()
   },
   loadConfig: function(args) {
     this.config = new Config()

@@ -5,7 +5,8 @@ module.exports = View.extend({
   el: "#config",
   template: template("#config-tpl"),
   events: {
-    "submit": "submit"
+    "submit": "submit",
+    "click .config-close": "submit",
   },
   render: function() {
     this.$el.html(this.template.render(this.model.toJSON()))

@@ -1,5 +1,6 @@
 body {
   font-size: 1.5em;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .nav-bar {
@@ -11,20 +12,18 @@ body {
   left: 0;
   width: 100%;
   height: 2em;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.5);
   color: #fcfcfc;
-}
-
-.nav-bar .clickable {
-  -webkit-app-region: no-drag;
+  z-index: 100;
 }
 
 .config-icon {
   position: absolute;
   top: 0;
   left: 0;
-  heigth: 2em;
-  font-size: 2em;
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
 }
 
 body.hover .nav-bar {
@@ -65,14 +64,29 @@ body.hover .nav-bar {
   left: -2em;
   width: 2em;
   height: 2em;
-
+  color: black;
   -webkit-clip-path: circle(0.9em);
 }
 
 .config {
+  position: absolute;
+  top: 0;
+  width: 100%;
   background: #fff;
+  z-index: 200;
 }
 
 .config-form {
+  position: relative;
   padding: 0.3em 0.5em 0;
+  z-index: 201;
+  background: #fff;
+}
+
+.config-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  z-index: 299;
 }
