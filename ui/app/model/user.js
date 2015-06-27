@@ -1,6 +1,6 @@
 var Model = require("exoskeleton").Model
   , remote = require("remote")
-  , fetchUser = remote.require("../lib/user/scraper")
+  , fetchUser = remote.require("./lib/user/scraper")
   , plainify = require("../lib/plainify")
 
 var DEFAULT_AVATAR = 'http://static.hdslb.com/images/member/noface.gif'
