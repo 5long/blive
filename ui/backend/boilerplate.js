@@ -1,6 +1,7 @@
 function fixTransparencyForLinux(app) {
   if (process.platform === 'linux') {
     app.commandLine.appendSwitch("enable-transparent-visuals")
+    app.commandLine.appendSwitch("disable-gpu")
   }
 }
 
