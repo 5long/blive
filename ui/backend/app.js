@@ -3,8 +3,8 @@ var BrowserWindow = require("browser-window")
 
 var dimension = {
   whyme: {
-    x: 823,
-    y: 23,
+    x: 850,
+    y: 28,
     width: 545,
     height: 240,
   },
