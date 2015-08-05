@@ -1,6 +1,16 @@
 var Collection = require("exoskeleton").Collection
-  , Message = require("../model/message")
+  , CommentMessage = require("../model/message")
+  , GiftMessage = require("../model/gift_message")
 
 module.exports = Collection.extend({
-  model: Message,
+  model: function(attr, opts) {
+    switch (attr.type) {
+      case 'comment':
+        return new CommentMessage(attr, opts)
+      case 'sendGift':
+        return new GiftMessage(attr, opts)
+      default:
+        throw new Error("Unknown msg type: " + attr.type)
+    }
+  },
 })

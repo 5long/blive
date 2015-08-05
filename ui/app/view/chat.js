@@ -13,20 +13,24 @@ module.exports = View.extend({
     this.service = ChatService.create(this.channelID)
     this.tick = 0
 
-    this.service.on("comment", function(c) {
-      this.msgs.add(plainify(c))
-    }.bind(this))
+    var msgAdder = function(m) {
+      this.msgs.add(plainify(m))
+    }.bind(this)
+
+    this.service.on("comment", msgAdder)
+      .on("sendGift", msgAdder)
     this.listenTo(this.msgs, "add", this.appendMsg)
   },
   appendMsg: function(m) {
-    m.withAuthor(new User({
-      id: m.get("uid"),
-      nick: m.get("nick")
-    }))
+    if (m.get("type") === "comment") {
+      m.withAuthor(new User({
+        id: m.get("uid"),
+        nick: m.get("nick")
+      }))
+      m.author.fetch()
+    }
 
     this.$el.prepend(new MessageView({model: m}).render().el)
-
-    m.author.fetch()
 
     this.trimIfNeeded()
   },

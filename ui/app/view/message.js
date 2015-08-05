@@ -18,4 +18,21 @@ var CommentView = MessageView.extend({
   template: template("#comment"),
 })
 
-module.exports = CommentView
+var GiftMessageView = MessageView.extend({
+  className: 'gift-msg-item',
+  template: template("#sendGift")
+})
+
+function MessageViewFactory(opts) {
+  switch (opts.model.get("type")) {
+    case 'comment':
+      return new CommentView(opts)
+    case 'sendGift':
+      return new GiftMessageView(opts)
+    default:
+      throw new Error("Unknown msg type: " +
+                      opts.model.get('type'))
+  }
+}
+
+module.exports = MessageViewFactory
