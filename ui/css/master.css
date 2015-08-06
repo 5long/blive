@@ -29,17 +29,25 @@ body.hover .nav-bar {
   display: block;
 }
 
-.comment-list {
+.message-list {
   color: #9eccee;
   list-style: none;
 }
 
-.comment-item {
+.comment-msg-item {
   position: relative;
   margin-left: 2em;
   min-height: 2em;
   line-height: 1.8;
+}
+
+.comment-msg-item,
+.gift-msg-item {
   text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+.gift-msg-item {
+  line-height: 1;
 }
 
 .comment-content {

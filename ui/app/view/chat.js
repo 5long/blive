@@ -6,7 +6,7 @@ var View = require("exoskeleton").View
   , User = require("../model/user")
 
 module.exports = View.extend({
-  el: "#comments",
+  el: "#messages",
   initialize: function(config) {
     this.channelID = config.get("channelID")
     this.msgs = new Messages()

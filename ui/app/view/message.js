@@ -14,7 +14,7 @@ var MessageView = View.extend({
 })
 
 var CommentView = MessageView.extend({
-  className: 'comment-item',
+  className: 'comment-msg-item',
   template: template("#comment"),
 })
 
