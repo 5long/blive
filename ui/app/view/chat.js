@@ -25,7 +25,9 @@ module.exports = View.extend({
     if (m.get("type") === "comment") {
       m.withAuthor(new User({
         id: m.get("uid"),
-        nick: m.get("nick")
+        nick: m.get("nick"),
+        isAdmin: m.get("isAdmin"),
+        isVip: m.get("isVip")
       }))
       m.author.fetch()
     }
