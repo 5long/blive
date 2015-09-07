@@ -65,6 +65,14 @@ body.hover .nav-bar {
   opacity: 0.8;
 }
 
+.user-is-vip .comment-author-nick {
+  color: #bbbb69;
+}
+
+.user-is-admin .comment-author-nick {
+  color: #f1b9b8;
+}
+
 .comment-author-avatar {
   position: absolute;
   top: 0;

@@ -21,7 +21,7 @@
   </ul>
 
   <template id="comment">
-    <div class="comment-content">
+    <div class="comment-content {{ author.userClass }}">
       <img class="comment-author-avatar"
           src="{{ author.avatar }}">
       <span class="comment-author-nick">{{ author.nick }}</span>
