@@ -1,4 +1,5 @@
 var ipc = require("ipc")
+  , shell = require("shell")
   , $ = require("jquery")
   , body = $(document.body)
 
@@ -18,4 +19,9 @@ body.hover(function() {
   body.addClass("hover")
 }, function() {
   body.removeClass("hover")
+})
+
+body.on("click", ".external-link", function() {
+  var href = $(this).data("href")
+  shell.openExternal(href)
 })

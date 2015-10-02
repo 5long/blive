@@ -7,6 +7,7 @@ var UserPresenter =  Model.extend({
   toJSON: function(opts) {
     var o = this.user.toJSON(opts)
     o.userClass = UserPresenter.buildUserClass(o)
+    o.profileUrl = UserPresenter.buildUserProfileUrl(o)
     return o
   }
 }, {
@@ -21,6 +22,9 @@ var UserPresenter =  Model.extend({
     }
 
     return classes.join(" ")
+  },
+  buildUserProfileUrl: function(user) {
+    return "http://space.bilibili.com/" + user.id
   }
 })
 
