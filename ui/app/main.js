@@ -1,6 +1,9 @@
 var ipc = require("ipc")
   , shell = require("shell")
   , $ = require("jquery")
+  , applyExternalLink = require("./app/util/apply_external_link")
+  , applyHoverClass = require("./app/util/apply_hover_class")
+
   , body = $(document.body)
 
 ipc.on("backendReady", function(args) {
@@ -9,19 +12,5 @@ ipc.on("backendReady", function(args) {
   this.app.start(args)
 }.bind(this))
 
-ipc.on("windowBlur", function() {
-  body.removeClass("hover")
-}).on("windowFocus", function() {
-  body.addClass("hover")
-})
-
-body.hover(function() {
-  body.addClass("hover")
-}, function() {
-  body.removeClass("hover")
-})
-
-body.on("click", ".external-link", function() {
-  var href = $(this).data("href")
-  shell.openExternal(href)
-})
+applyHoverClass(ipc, body)
+applyExternalLink(shell, $, body)
