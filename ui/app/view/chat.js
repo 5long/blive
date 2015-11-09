@@ -4,6 +4,7 @@ var View = require("exoskeleton").View
   , MessageView = require("../view/message")
   , plainify = require("../lib/plainify")
   , User = require("../model/user")
+  , Commander = require("../model/plugin/commander")
 
 module.exports = View.extend({
   el: "#messages",
@@ -20,6 +21,7 @@ module.exports = View.extend({
     this.service.on("comment", msgAdder)
       .on("sendGift", msgAdder)
     this.listenTo(this.msgs, "add", this.appendMsg)
+    new Commander({chat: this}).run()
   },
   appendMsg: function(m) {
     if (m.get("type") === "comment") {
