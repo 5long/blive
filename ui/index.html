@@ -21,10 +21,11 @@
   </ul>
 
   <template id="comment">
-    <div class="comment-content {{ author.userClass }} external-link"
-      data-href="{{ author.profileUrl }}">
-      <img class="comment-author-avatar" src="{{ author.avatar }}">
-      <span class="comment-author-nick">{{ author.nick }}</span>
+    <div class="comment-content {{ author.userClass }}">
+      <img class="comment-author-avatar external-link" src="{{ author.avatar }}"
+        data-href="{{ author.avatar }}">
+      <span class="comment-author-nick external-link" data-href="{{ author.profileUrl }}"
+        >{{ author.nick }}</span>
       <span class="comment-text"
             style="color: #{{ color.hex }}">{{ text }}</span>
     </div>
