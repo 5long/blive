@@ -1,10 +1,11 @@
 var Model = require("exoskeleton").Model
   , UserPresenter = require("../presenter/user")
 
-module.exports = Model.extend({
+var Message = module.exports = Model.extend({
   toJSON: function(opts) {
     var o = Model.prototype.toJSON.call(this, opts)
     if (this.author) o.author = (new UserPresenter(this.author)).toJSON()
+    o.colorFixed = Message.fixColor(o.color)
     return o
   },
   withAuthor: function(author) {
@@ -22,5 +23,17 @@ module.exports = Model.extend({
   propagateAuthorEvents: function() {
     this.trigger("userInfoFulfill", this)
     this.trigger("change", this)
+  }
+}, {
+  fixColor: function(color) {
+    var fixedHex
+    if (color.hex === 'ff6868') {
+      fixedHex = 'bbbb69'
+    } else {
+      fixedHex = color.hex
+    }
+    return {
+      hex: fixedHex
+    }
   }
 })
