@@ -13,14 +13,14 @@
   "main": "main.js",
   "bin": "bin/blive.js",
   "dependencies": {
-    "cli": "^0.7.0",
+    "cli": "^0.7",
     "ent": "^2.2.0",
     "exoskeleton": "^0.7.0",
     "hogan.js": "^3.0.2",
-    "jquery": "^2.1.4",
-    "lodash": "^3.9.3",
-    "request": "^2.55.0",
-    "whacko": "^0.18.0"
+    "jquery": "^2.1",
+    "lodash": "^3.9",
+    "request": "^2.55",
+    "whacko": "^0.18"
   },
   "devDependencies": {
     "electron-packager": "^4.1.2",
