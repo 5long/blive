@@ -1,48 +1,48 @@
 #!/usr/bin/env node
-var cli = require("cli")
+const cli = require('cli')
+const Chat = require('..').Chat
+const FanService = require('..').FanService
 
-var commands = {
-  fans: function(args) {
-    var uid = args[0]
+const commands = {
+  fans(args) {
+    const uid = args[0]
 
     if (!(/^\d+$/.test(uid))) {
       console.error(
-        "User ID must be a number, got %j instead.",
+        'User ID must be a number, got %j instead.',
         uid)
       process.exit(3)
     }
 
-    var FanService = require("..").FanService
 
-    var fs = new FanService(uid)
+    const fs = new FanService(uid)
 
-    fs.on("fan", function(fan) {
-      console.log("%j", fan)
+    fs.on('fan', function logNewFan(fan) {
+      console.log('%j', fan)
     }).start()
 
-    process.on("SIGUSR2", function() {
-      fs.fetchLatest()
-    })
+    process.on('SIGUSR2', fs.fetchLatest.bind(fs))
   },
-  chat: function(args) {
-    var channelID = args[0]
+  chat(args) {
+    const channelID = args[0]
 
     if (!(/^\d+$/.test(channelID))) {
       console.error(
-        "Channel ID must be a number, got %j instead.",
+        'Channel ID must be a number, got %j instead.',
         channelID)
       process.exit(3)
     }
 
-    var Chat = require("..").Chat
 
     Chat.create(channelID)
-      .on("comment", function(c) {
-        console.log("%s : %s", c.nick, c.text)
-      }).on("onlineNumber", function(n) {
-        console.log("# Online: %d", n)
-      }).on("userBlocked", function(b) {
-        console.log("User %s[%s] is blocked by admin",
+      .on('comment', function(c) {
+        console.log('%s : %s', c.nick, c.text)
+      })
+      .on('onlineNumber', function(n) {
+        console.log('# Online: %d', n)
+      })
+      .on('userBlocked', function(b) {
+        console.log('User %s[%s] is blocked by admin',
                     b.nick, b.uid)
       })
   },
