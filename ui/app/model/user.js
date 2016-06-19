@@ -1,7 +1,7 @@
-var Model = require("exoskeleton").Model
-  , remote = require("remote")
-  , fetchUser = remote.require("./lib/user/scraper")
-  , plainify = require("../lib/plainify")
+var Model = require('exoskeleton').Model
+  , remote = require('remote')
+  , fetchUser = remote.require('./lib/user/scraper')
+  , plainify = require('../lib/plainify')
 
 var DEFAULT_AVATAR = 'http://static.hdslb.com/images/member/noface.gif'
 
@@ -10,14 +10,14 @@ var User = module.exports = Model.extend({
     avatar: DEFAULT_AVATAR,
     nick: '不知名用户',
   },
-  initialize: function() {
+  initialize() {
     if (User.cache.has(this.id)) {
-      this.set(User.cache.get(this.id), {silent: true})
+      this.set(User.cache.get(this.id), { silent: true })
     }
   },
-  sync: function(method, model, opts) {
+  sync(method, model, opts) {
     if (method !== 'read') {
-      throw new Error("User model is read-only")
+      throw new Error('User model is read-only')
     }
 
     var promise = new Promise(function(resolve, reject) {
@@ -36,4 +36,4 @@ var User = module.exports = Model.extend({
     })
     return promise.then(opts.success, opts.error)
   },
-}, {cache: new Map()})
+}, { cache: new Map() })

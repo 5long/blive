@@ -35,6 +35,8 @@ module.exports = {
     "space-before-function-paren": 0,
     "func-names": 0,
     "no-param-reassign": 0,
+    "consistent-return": 0,
+    "global-require": 0,
     "no-unused-vars": [2, {"args": "none"}],
   }
 }

@@ -1,5 +1,5 @@
-var BrowserWindow = require("browser-window")
-  , _ = require("lodash")
+var BrowserWindow = require('browser-window')
+  , _ = require('lodash')
 
 var dimension = {
   whyme: {
@@ -13,7 +13,7 @@ var dimension = {
     y: 23,
     width: 1180,
     height: 720,
-  }
+  },
 }
 
 function createMainWindow(app) {
@@ -24,21 +24,21 @@ function createMainWindow(app) {
     'always-on-top': true,
     type: 'splash',
     'web-preferences': {
-      "direct-write": true
+      'direct-write': true,
     },
   }, process.env.BLIVE_DEV ? dimension.dev : dimension.whyme))
 
   win.loadUrl('file://' + app.root + '/index.html')
 
-  win.on("blur", function() {
-    win.send("windowBlur")
-  }).on("focus", function() {
-    win.send("windowFocus")
+  win.on('blur', function() {
+    win.send('windowBlur')
+  }).on('focus', function() {
+    win.send('windowFocus')
   })
 
   if (process.env.BLIVE_DEV) {
     win.openDevTools()
-    process.on("SIGUSR2", function() {
+    process.on('SIGUSR2', function() {
       win.openDevTools()
     })
   }
@@ -46,11 +46,11 @@ function createMainWindow(app) {
 }
 
 module.exports = function(app, channelID) {
-  app.on("ready", function() {
+  app.on('ready', function() {
     var mainWin = createMainWindow(app)
 
     mainWin.webContents.on('did-finish-load', function() {
-      mainWin.send("backendReady", {channelID: channelID})
+      mainWin.send('backendReady', { channelID })
     })
   })
 }

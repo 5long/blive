@@ -1,22 +1,22 @@
-var Model = require("exoskeleton").Model
-  , User = require("../../model/user")
+var Model = require('exoskeleton').Model
+  , User = require('../../model/user')
 
 module.exports = Model.extend({
-  initialize: function(config) {
+  initialize(config) {
     this.chat = config.chat
   },
-  run: function() {
+  run() {
     // Access level too deep. Refactoring needed
-    this.chat.service.on("comment", function(m) {
+    this.chat.service.on('comment', function(m) {
       if (this.isCommandMatched(m)) {
         this.executeCommand(m)
       }
     }.bind(this))
   },
-  isCommandMatched: function(m) {
-    return m.text === "!cc"
+  isCommandMatched(m) {
+    return m.text === '!cc'
   },
-  executeCommand: function(m) {
+  executeCommand(m) {
     User.cache.delete(m.uid)
   },
 })

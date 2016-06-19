@@ -1,4 +1,4 @@
-/* 
+/*
  * Make remote object from electron plainified.
  */
 module.exports = function plainify(wrapped) {

@@ -1,5 +1,5 @@
 if (process.type === 'browser') {
-  require("./ui")
+  require('./ui')
 } else {
-  module.exports = require("./lib")
+  module.exports = require('./lib')
 }

@@ -1,1 +1,1 @@
-module.exports = require("exoskeleton").View
+module.exports = require('exoskeleton').View
