@@ -1,31 +1,31 @@
-var Model = require('exoskeleton').Model
-  , UserPresenter = require('../presenter/user')
+var Model = require("exoskeleton").Model
+  , UserPresenter = require("../presenter/user")
 
 var Message = module.exports = Model.extend({
-  toJSON(opts) {
+  toJSON: function(opts) {
     var o = Model.prototype.toJSON.call(this, opts)
     if (this.author) o.author = (new UserPresenter(this.author)).toJSON()
     o.colorFixed = Message.fixColor(o.color)
     return o
   },
-  withAuthor(author) {
+  withAuthor: function(author) {
     if (this.author) {
       throw new Error(
-        'Already assigned author to message ' + this.id)
+        "Already assigned author to message " + this.id)
     }
 
     this.author = author
 
     this.listenTo(
-      author, 'change', this.propagateAuthorEvents)
+      author, "change", this.propagateAuthorEvents)
     return this
   },
-  propagateAuthorEvents() {
-    this.trigger('userInfoFulfill', this)
-    this.trigger('change', this)
-  },
+  propagateAuthorEvents: function() {
+    this.trigger("userInfoFulfill", this)
+    this.trigger("change", this)
+  }
 }, {
-  fixColor(color) {
+  fixColor: function(color) {
     var fixedHex
     if (color.hex === 'ff6868') {
       fixedHex = 'bbbb69'
@@ -33,7 +33,7 @@ var Message = module.exports = Model.extend({
       fixedHex = color.hex
     }
     return {
-      hex: fixedHex,
+      hex: fixedHex
     }
-  },
+  }
 })

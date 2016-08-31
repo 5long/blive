@@ -1,31 +1,31 @@
-var Model = require('exoskeleton').Model
+var Model = require("exoskeleton").Model
 
-var UserPresenter = Model.extend({
-  initialize(user) {
+var UserPresenter =  Model.extend({
+  initialize: function(user) {
     this.user = user
   },
-  toJSON(opts) {
+  toJSON: function(opts) {
     var o = this.user.toJSON(opts)
     o.userClass = UserPresenter.buildUserClass(o)
     o.profileUrl = UserPresenter.buildUserProfileUrl(o)
     return o
-  },
+  }
 }, {
-  buildUserClass(user) {
+  buildUserClass: function(user) {
     var classes = []
     if (user.isVip) {
-      classes.push('user-is-vip')
+      classes.push("user-is-vip")
     }
 
     if (user.isAdmin) {
-      classes.push('user-is-admin')
+      classes.push("user-is-admin")
     }
 
-    return classes.join(' ')
+    return classes.join(" ")
   },
-  buildUserProfileUrl(user) {
-    return 'http://space.bilibili.com/' + user.id
-  },
+  buildUserProfileUrl: function(user) {
+    return "http://space.bilibili.com/" + user.id
+  }
 })
 
 module.exports = UserPresenter

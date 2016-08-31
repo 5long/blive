@@ -1,4 +1,4 @@
-var Model = require('exoskeleton').Model
+var Model = require("exoskeleton").Model
 
 module.exports = Model.extend({
   defaults: {

@@ -1,5 +1,5 @@
-var Hogan = require('hogan.js')
-  , $ = require('jquery')
+var Hogan = require("hogan.js")
+  , $ = require("jquery")
 
 function collapseWhitespace(str) {
   return str.replace(/>\s+</g, '><').trim()
