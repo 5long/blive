@@ -5,3 +5,5 @@ ui/css/fonts/
 
 *.tgz
 *.7z
+
+yarn-error.log
